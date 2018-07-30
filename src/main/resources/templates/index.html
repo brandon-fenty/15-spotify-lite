@@ -1,19 +1,41 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Songs</title>
-    <link rel="stylesheet" href="/css/main.css" />
-</head>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <link rel="stylesheet" href="/css/main.css" />
+    </head>
     <body>
-        <nav>
-            <a href="/">Home</a>
-            <a href="/songs">Songs</a>
-        </nav>
+        <header>
+            <h1>Spotify Lite</h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/songs">Songs</a>
+            </nav>
+        </header>
         <main>
-            <h1>WELCOME</h1>
-            <h3>To Spotify Lite</h3>
-            <a href="/login">Login</a>
+            <h3>Upload a Song</h3>
+            <div th:if="${message}">
+                <h2 th:text="${message}"/>
+            </div>
+
+            <div>
+                <form method="POST" enctype="multipart/form-data" action="/">
+                    File to upload: <input type="file" name="file" />
+                    <input type="submit" value="Upload" />
+                </form>
+            </div>
         </main>
+
+        <div>
+            <ul>
+                <li th:each="file : ${files}">
+                    <p>
+                        <a th:href="${file}" th:text="${file}" />
+                    </p>
+                    <p th:if="${file.endsWith('jpg')}">
+                        <img th:src="${file}" />
+                    </p>
+                </li>
+            </ul>
+        </div>
 
     </body>
 </html>
